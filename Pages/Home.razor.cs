@@ -37,7 +37,7 @@ public partial class Home : IAsyncDisposable
     private string statusAnnouncement = string.Empty;
     private bool isLoading = true;
     private bool focusMainAfterRender;
-    private bool soundEnabled;
+    private bool soundEnabled = true;
 
     private int CurrentProgressStep => stage switch
     {
