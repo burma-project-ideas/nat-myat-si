@@ -35,4 +35,4 @@ Import the repository into Vercel with the project root unchanged. No framework 
 
 ## Accessibility and design
 
-The interface uses native controls, bilingual English and Myanmar copy, visible keyboard focus, 44-pixel minimum targets, responsive reflow, and reduced-motion support. Its high-contrast tactical HUD theme includes a covered-node target matrix, collapsible local diagnostics, system status feedback, and optional synthesized interface sounds that are off by default. The font stack uses San Francisco on Apple platforms and Segoe UI on Windows, with system fallbacks for Myanmar glyphs.
+The interface uses native controls, concise bilingual English and Myanmar copy, visible keyboard focus, 44-pixel minimum targets, responsive reflow, and reduced-motion support. Its high-contrast tactical theme keeps the covered-position grid, subtle status motion, and optional synthesized interface sounds that are off by default. The font stack uses San Francisco on Apple platforms and Segoe UI on Windows, with system fallbacks for Myanmar glyphs.

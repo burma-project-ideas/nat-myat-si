@@ -11,7 +11,7 @@ public partial class Home : IAsyncDisposable
     private static readonly ProgressStep[] ProgressSteps =
     [
         new(1, "Question", "မေးခွန်း"),
-        new(2, "Choose", "ရွေးချယ်"),
+        new(2, "Position", "နေရာ"),
         new(3, "Reading", "ဟောစာတမ်း")
     ];
 
@@ -32,7 +32,6 @@ public partial class Home : IAsyncDisposable
     private NatMyatSiQuestion? selectedQuestion;
     private DivinationSymbol? selectedSymbol;
     private NatMyatSiReading? selectedReading;
-    private int? selectedPosition;
     private WorkflowStage stage = WorkflowStage.Welcome;
     private string? loadError;
     private string statusAnnouncement = string.Empty;
@@ -46,15 +45,6 @@ public partial class Home : IAsyncDisposable
         WorkflowStage.Selection => 2,
         WorkflowStage.Result => 3,
         _ => 0
-    };
-
-    private string CurrentMode => stage switch
-    {
-        WorkflowStage.Welcome => "STANDBY",
-        WorkflowStage.Question => "QUERY SELECT",
-        WorkflowStage.Selection => "TARGETING",
-        WorkflowStage.Result => "READING COMPLETE",
-        _ => "STANDBY"
     };
 
     protected override Task OnInitializedAsync() => LoadCatalogAsync();
@@ -123,11 +113,10 @@ public partial class Home : IAsyncDisposable
     private async Task SelectQuestion(NatMyatSiQuestion question)
     {
         selectedQuestion = question;
-        selectedPosition = null;
         PrepareShuffledSymbols();
         MoveTo(
             WorkflowStage.Selection,
-            "The symbols are hidden. Choose one position. / သင်္ကေတများကို ဖုံးထားပါသည်။ နေရာတစ်ခု ရွေးပါ။");
+            "Choose a covered position. / ဖုံးထားသော နေရာတစ်ခု ရွေးပါ။");
         await PlaySoundAsync("target");
     }
 
@@ -139,7 +128,6 @@ public partial class Home : IAsyncDisposable
         }
 
         selectedSymbol = symbol;
-        selectedPosition = shuffledSymbols.FindIndex(candidate => candidate.Id == symbol.Id) + 1;
         selectedReading = catalog.GetReading(selectedQuestion.Id, symbol.Id);
         MoveTo(
             WorkflowStage.Result,
@@ -152,11 +140,10 @@ public partial class Home : IAsyncDisposable
         selectedQuestion = null;
         selectedSymbol = null;
         selectedReading = null;
-        selectedPosition = null;
         shuffledSymbols.Clear();
         MoveTo(
             WorkflowStage.Question,
-            "Choose a new question. / မေးခွန်းအသစ်တစ်ခု ရွေးပါ။");
+            "Choose another question. / အခြားမေးခွန်းတစ်ခု ရွေးပါ။");
         await PlaySoundAsync("navigate");
     }
 
@@ -164,7 +151,6 @@ public partial class Home : IAsyncDisposable
     {
         selectedSymbol = null;
         selectedReading = null;
-        selectedPosition = null;
         PrepareShuffledSymbols();
         MoveTo(
             WorkflowStage.Selection,

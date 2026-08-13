@@ -13,21 +13,19 @@
     </div>
     <header class="site-header">
         <a class="wordmark" href="/" aria-label="NatMyatSi home / နတ်မျက်စိ မူလစာမျက်နှာ">
-            <span class="wordmark-kicker" aria-hidden="true">ORACLE_INTERFACE</span>
             <span lang="en">NatMyatSi</span>
             <span lang="my">နတ်မျက်စိ</span>
         </a>
-        <div class="header-console">
-            <p>
-                <span lang="en">Tactical reflection interface</span>
-                <span lang="my">စဉ်းစားဆင်ခြင်မှု ထိန်းချုပ်မျက်နှာပြင်</span>
-            </p>
-            <p class="system-status">
-                <span class="system-dot" aria-hidden="true"></span>
-                <span lang="en">Local core online</span>
-                <span lang="my">စက်တွင်းစနစ် အသင့်ဖြစ်သည်</span>
-            </p>
-        </div>
+        <button type="button"
+                class="sound-toggle header-sound-toggle"
+                aria-pressed="@(soundEnabled ? "true" : "false")"
+                @onclick="ToggleSoundAsync">
+            <span class="sound-indicator" aria-hidden="true"></span>
+            <span>
+                <span lang="en">Sound @(soundEnabled ? "on" : "off")</span>
+                <span lang="my">အသံ @(soundEnabled ? "ဖွင့်" : "ပိတ်")</span>
+            </span>
+        </button>
     </header>
 
     <main id="main-content" class="main-content" tabindex="-1" @ref="mainContent">
@@ -59,33 +57,22 @@
         @if (isLoading)
         {
             <section class="flow-panel hud-panel loading-state" aria-labelledby="loading-title" aria-busy="true">
-                <p class="panel-code" aria-hidden="true">BOOT_SEQUENCE // CATALOG_SYNC</p>
-                <p class="eyebrow">NatMyatSi · နတ်မျက်စိ</p>
                 <h1 id="loading-title">
-                    <span lang="en">Preparing your questions</span>
-                    <span lang="my">မေးခွန်းများ ပြင်ဆင်နေသည်</span>
+                    <span lang="en">Getting things ready</span>
+                    <span lang="my">အဆင်သင့် ပြင်ဆင်နေသည်</span>
                 </h1>
-                <p>
-                    <span lang="en">Loading the local reading catalog…</span>
-                    <span lang="my">အက်ပ်အတွင်းရှိ ဟောစာတမ်းအချက်အလက်များကို ဖတ်နေသည်…</span>
-                </p>
             </section>
         }
         else if (loadError is not null)
         {
             <section class="flow-panel hud-panel error-state" aria-labelledby="load-error-title" role="alert">
-                <p class="panel-code" aria-hidden="true">SYSTEM_ALERT // DATA_FAULT</p>
-                <p class="eyebrow">
-                    <span lang="en">Unable to continue</span>
-                    <span lang="my">ဆက်လက်လုပ်ဆောင်၍ မရပါ</span>
-                </p>
                 <h1 id="load-error-title">
-                    <span lang="en">The reading data could not be loaded</span>
-                    <span lang="my">ဟောစာတမ်းအချက်အလက်များကို ဖတ်၍မရပါ</span>
+                    <span lang="en">NatMyatSi could not start</span>
+                    <span lang="my">နတ်မျက်စိကို စတင်၍ မရပါ</span>
                 </h1>
                 <p>
-                    <span lang="en">Refresh the local data and try again.</span>
-                    <span lang="my">အက်ပ်အတွင်းရှိ အချက်အလက်များကို ပြန်ဖတ်ရန် ထပ်မံကြိုးစားပါ။</span>
+                    <span lang="en">Try again. If the problem continues, reload the page.</span>
+                    <span lang="my">ထပ်မံကြိုးစားပါ။ မရသေးပါက စာမျက်နှာကို ပြန်ဖွင့်ပါ။</span>
                 </p>
                 <button type="button" class="primary-action" @onclick="LoadCatalogAsync">
                     <span lang="en">Try again</span>
@@ -99,34 +86,14 @@
             {
                 case WorkflowStage.Welcome:
                     <section class="flow-panel hud-panel welcome-panel" aria-labelledby="welcome-title">
-                        <p class="panel-code" aria-hidden="true">ORACLE_CORE // STANDBY</p>
-                        <p class="eyebrow">
-                            <span lang="en">100 questions · 16 symbols</span>
-                            <span lang="my">မေးခွန်း ၁၀၀ · သင်္ကေတ ၁၆ ခု</span>
-                        </p>
                         <h1 id="welcome-title">
-                            <span lang="en">Pause. Ask. Choose.</span>
-                            <span lang="my">ခဏနားပါ။ မေးပါ။ ရွေးပါ။</span>
+                            <span lang="en">Choose a question and reveal a reading</span>
+                            <span lang="my">မေးခွန်းရွေးပြီး ဟောစာတမ်းဖော်ထုတ်ပါ</span>
                         </h1>
                         <p class="lede">
-                            <span lang="en">Choose a question, then reveal one reading from a covered position that draws you.</span>
-                            <span lang="my">မေးခွန်းတစ်ခုရွေးပါ၊ ထို့နောက် စိတ်ဝင်စားမိသော ဖုံးထားသည့်နေရာမှ ဟောစာတမ်းတစ်ခုကို ဖော်ထုတ်ပါ။</span>
+                            <span lang="en">Choose a question, then choose one covered position to see its reading.</span>
+                            <span lang="my">မေးခွန်းတစ်ခုရွေးပြီး ဖုံးထားသော နေရာတစ်ခုကို ရွေးကာ ဟောစာတမ်းကို ကြည့်ပါ။</span>
                         </p>
-
-                        <ol class="flow-summary">
-                            <li>
-                                <span class="summary-number" aria-hidden="true">1</span>
-                                <span><span lang="en">Choose a question</span><span lang="my">မေးခွန်းရွေးပါ</span></span>
-                            </li>
-                            <li>
-                                <span class="summary-number" aria-hidden="true">2</span>
-                                <span><span lang="en">Choose a covered position</span><span lang="my">ဖုံးထားသော နေရာကို ရွေးပါ</span></span>
-                            </li>
-                            <li>
-                                <span class="summary-number" aria-hidden="true">3</span>
-                                <span><span lang="en">Read and reflect</span><span lang="my">ဖတ်ရှုပြီး စဉ်းစားပါ</span></span>
-                            </li>
-                        </ol>
 
                         <aside class="reflection-note" aria-label="Important note / အရေးကြီးမှတ်ချက်">
                             <p lang="en">For reflection and entertainment only. It is not professional advice or a guaranteed prediction.</p>
@@ -134,8 +101,8 @@
                         </aside>
 
                         <button type="button" class="primary-action" @onclick="StartReading">
-                            <span lang="en">Begin a reading</span>
-                            <span lang="my">ဟောစာတမ်း စတင်မည်</span>
+                            <span lang="en">Choose a question</span>
+                            <span lang="my">မေးခွန်း ရွေးမည်</span>
                         </button>
                     </section>
                     break;
@@ -161,14 +128,6 @@
         }
             </div>
 
-            @if (!isLoading && loadError is null)
-            {
-                <SystemDiagnostics CurrentStep="@CurrentProgressStep"
-                                   Mode="@CurrentMode"
-                                   SelectedPosition="selectedPosition"
-                                   SoundEnabled="soundEnabled"
-                                   SoundToggle="ToggleSoundAsync" />
-            }
         </div>
     </main>
 

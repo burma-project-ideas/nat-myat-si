@@ -1,19 +1,12 @@
 <section class="flow-panel hud-panel" aria-labelledby="question-picker-title">
-    <p class="panel-code" aria-hidden="true">QUERY_ARCHIVE // INDEX_100</p>
-    <p class="eyebrow">
-        <span lang="en">Step 1 of 3</span>
-        <span aria-hidden="true"> · </span>
-        <span lang="my">အဆင့် ၁ / ၃</span>
-    </p>
-
     <h1 id="question-picker-title">
         <span lang="en">Choose a question</span>
         <span lang="my">မေးခွန်းတစ်ခု ရွေးပါ</span>
     </h1>
 
     <p class="lede">
-        <span lang="en">Choose the thought you want to reflect on today.</span>
-        <span lang="my">ဒီနေ့ စဉ်းစားဆင်ခြင်လိုသော အကြောင်းအရာကို ရွေးပါ။</span>
+        <span lang="en">Choose what you want to reflect on.</span>
+        <span lang="my">စဉ်းစားဆင်ခြင်လိုသော အကြောင်းအရာကို ရွေးပါ။</span>
     </p>
 
     <div class="search-field">
@@ -26,25 +19,21 @@
                inputmode="search"
                autocomplete="off"
                placeholder="Search by number or Myanmar text / နံပါတ် သို့မဟုတ် မြန်မာစာဖြင့်ရှာရန်"
-               aria-describedby="question-search-help question-count"
+               aria-describedby="question-count"
                @bind="SearchText"
                @bind:event="oninput" />
-        <p id="question-search-help" class="field-help">
-            <span lang="en">All questions are stored in this app.</span>
-            <span lang="my">မေးခွန်းအားလုံးကို ဤအက်ပ်အတွင်း သိမ်းထားပါသည်။</span>
-        </p>
     </div>
 
     <p id="question-count" class="result-count" aria-live="polite">
-        <span lang="en">@FilteredQuestions.Count question(s) shown</span>
-        <span lang="my">မေးခွန်း @FilteredQuestions.Count ခု ပြထားသည်</span>
+        <span lang="en">Showing @FilteredQuestions.Count of @Questions.Count questions</span>
+        <span lang="my">မေးခွန်း @FilteredQuestions.Count / @Questions.Count ခု ပြထားသည်</span>
     </p>
 
     @if (FilteredQuestions.Count == 0)
     {
         <div class="empty-state" role="status">
-            <p lang="en">No questions match that search.</p>
-            <p lang="my">ရှာဖွေမှုနှင့် ကိုက်ညီသော မေးခွန်းမရှိပါ။</p>
+            <p lang="en">No matching questions. Try a different number or word.</p>
+            <p lang="my">ကိုက်ညီသော မေးခွန်းမရှိပါ။ အခြားနံပါတ် သို့မဟုတ် စာလုံးဖြင့် ရှာပါ။</p>
         </div>
     }
     else
