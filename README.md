@@ -2,7 +2,7 @@
 
 NatMyatSi is a bilingual, client-only .NET 10 Blazor WebAssembly app. It runs entirely in the browser and is designed for static hosting on Vercel.
 
-The app has no ASP.NET Core host, API endpoint, account, database, or submitted question. Its 100 questions, 16 symbols, and 1,600 readings are versioned as a local JSON asset.
+The app has no ASP.NET Core host, API endpoint, account, database, or submitted question. Its 100 questions, 16 symbols, and 1,600 readings are compiled directly into the WebAssembly application as C# static data.
 
 ## Reading flow
 
@@ -19,9 +19,9 @@ dotnet run
 
 Open the HTTPS address shown in the terminal.
 
-## Static data
+## Compiled static data
 
-The application reads `wwwroot/data/nat-myat-si.json` as a same-origin static asset. The catalog is validated in the browser before the reading flow starts:
+The application builds its catalog from `Data/NatMyatSiStaticData.cs`. It does not request a JSON file or call an API at runtime. The compiled catalog is validated before the reading flow starts:
 
 - exactly 100 unique questions;
 - exactly 16 unique symbols;

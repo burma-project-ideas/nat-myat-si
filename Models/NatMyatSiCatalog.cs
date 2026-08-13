@@ -4,30 +4,35 @@ public sealed class NatMyatSiCatalog
 {
     private readonly IReadOnlyDictionary<(int QuestionId, string SymbolId), NatMyatSiReading> readings;
 
-    public NatMyatSiCatalog(NatMyatSiData data)
+    public NatMyatSiCatalog(
+        IReadOnlyList<NatMyatSiQuestion> questions,
+        IReadOnlyList<DivinationSymbol> symbols,
+        IReadOnlyList<NatMyatSiReading> answers)
     {
-        ArgumentNullException.ThrowIfNull(data);
+        ArgumentNullException.ThrowIfNull(questions);
+        ArgumentNullException.ThrowIfNull(symbols);
+        ArgumentNullException.ThrowIfNull(answers);
 
-        if (data.Questions.Count != 100)
+        if (questions.Count != 100)
         {
             throw new InvalidDataException("The NatMyatSi catalog must contain 100 questions.");
         }
 
-        if (data.Symbols.Count != 16)
+        if (symbols.Count != 16)
         {
             throw new InvalidDataException("The NatMyatSi catalog must contain 16 symbols.");
         }
 
-        var questionIds = data.Questions.Select(question => question.Id).ToHashSet();
-        var symbolIds = data.Symbols.Select(symbol => symbol.Id).ToHashSet(StringComparer.Ordinal);
+        var questionIds = questions.Select(question => question.Id).ToHashSet();
+        var symbolIds = symbols.Select(symbol => symbol.Id).ToHashSet(StringComparer.Ordinal);
 
-        if (questionIds.Count != data.Questions.Count || symbolIds.Count != data.Symbols.Count)
+        if (questionIds.Count != questions.Count || symbolIds.Count != symbols.Count)
         {
             throw new InvalidDataException("The NatMyatSi catalog contains duplicate identifiers.");
         }
 
         var readingIndex = new Dictionary<(int QuestionId, string SymbolId), NatMyatSiReading>();
-        foreach (var reading in data.Answers)
+        foreach (var reading in answers)
         {
             if (!questionIds.Contains(reading.QuestionId) || !symbolIds.Contains(reading.SymbolId))
             {
@@ -40,9 +45,9 @@ public sealed class NatMyatSiCatalog
             }
         }
 
-        foreach (var question in data.Questions)
+        foreach (var question in questions)
         {
-            foreach (var symbol in data.Symbols)
+            foreach (var symbol in symbols)
             {
                 if (!readingIndex.ContainsKey((question.Id, symbol.Id)))
                 {
@@ -51,8 +56,8 @@ public sealed class NatMyatSiCatalog
             }
         }
 
-        Questions = data.Questions.OrderBy(question => question.Id).ToArray();
-        Symbols = data.Symbols.ToArray();
+        Questions = questions.OrderBy(question => question.Id).ToArray();
+        Symbols = symbols.ToArray();
         readings = readingIndex;
     }
 

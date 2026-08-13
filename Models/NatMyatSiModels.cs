@@ -1,15 +1,4 @@
-using System.Text.Json.Serialization;
-
 namespace NatMyatSi.Models;
-
-public sealed class NatMyatSiData
-{
-    public List<NatMyatSiQuestion> Questions { get; init; } = [];
-
-    public List<DivinationSymbol> Symbols { get; init; } = [];
-
-    public List<NatMyatSiReading> Answers { get; init; } = [];
-}
 
 public sealed class NatMyatSiQuestion
 {
@@ -30,7 +19,6 @@ public sealed class DivinationSymbol
 
     public int Column { get; init; }
 
-    [JsonIgnore]
     public string MyanmarName => Id switch
     {
         "jupiter" => "ကြာသပတေး",
@@ -55,15 +43,9 @@ public sealed class DivinationSymbol
 
 public sealed class NatMyatSiReading
 {
-    [JsonPropertyName("question_id")]
     public int QuestionId { get; init; }
 
-    [JsonPropertyName("symbol_id")]
     public string SymbolId { get; init; } = string.Empty;
 
     public string Text { get; init; } = string.Empty;
 }
-
-[JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true)]
-[JsonSerializable(typeof(NatMyatSiData))]
-internal sealed partial class NatMyatSiJsonContext : JsonSerializerContext;

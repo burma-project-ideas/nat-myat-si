@@ -14,16 +14,17 @@ This repository is a client-only Blazor WebAssembly application. It has no ASP.N
 
 - `Pages/`: Routable pages and their code-behind files.
 - `Components/`: Reusable UI components.
-- `Models/`: JSON data contracts and application models.
-- `Services/`: Browser-side services, including local static data loading.
-- `wwwroot/`: Static assets published to Vercel, including the NatMyatSi JSON catalog.
+- `Data/`: Versioned NatMyatSi content compiled into the WebAssembly application.
+- `Models/`: Application models and catalog validation.
+- `Services/`: Browser-side services, including access to compiled static data.
+- `wwwroot/`: Static presentation assets published to Vercel.
 
 ## Data access
 
-- Load NatMyatSi content only from the versioned JSON file in `wwwroot/data/`.
-- Use the registered browser `HttpClient` for same-origin static assets only.
+- Load NatMyatSi content only from the versioned C# source in `Data/`.
+- Keep the catalog compiled into the application; do not add runtime data-file requests.
 - Do not add external API calls, an ASP.NET Core host, or server-side data access.
-- Services that load data must accept a `CancellationToken` and present generic user-facing error messages.
+- Services that provide data must accept a `CancellationToken` and present generic user-facing error messages.
 
 ## UI guidance
 
