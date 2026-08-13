@@ -1,4 +1,5 @@
-<section class="flow-panel" aria-labelledby="symbol-picker-title">
+<section class="flow-panel hud-panel targeting-panel" aria-labelledby="symbol-picker-title">
+    <p class="panel-code" aria-hidden="true">TARGET_MATRIX // CONCEALED_NODES</p>
     <p class="eyebrow">
         <span lang="en">Step 2 of 3</span>
         <span aria-hidden="true"> · </span>
@@ -33,6 +34,7 @@
                     @key="item.symbol.Id"
                     @onclick="() => SymbolSelected.InvokeAsync(item.symbol)">
                 <span aria-hidden="true">?</span>
+                <span class="target-label" aria-hidden="true">TARGET</span>
                 <span class="position-number" aria-hidden="true">@position</span>
             </button>
         }

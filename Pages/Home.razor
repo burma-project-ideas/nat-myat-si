@@ -8,23 +8,37 @@
 </a>
 
 <div class="app-shell">
+    <div class="viewport-frame" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+    </div>
     <header class="site-header">
         <a class="wordmark" href="/" aria-label="NatMyatSi home / နတ်မျက်စိ မူလစာမျက်နှာ">
+            <span class="wordmark-kicker" aria-hidden="true">ORACLE_INTERFACE</span>
             <span lang="en">NatMyatSi</span>
             <span lang="my">နတ်မျက်စိ</span>
         </a>
-        <p>
-            <span lang="en">A quiet space for reflection</span>
-            <span lang="my">အေးချမ်းစွာ စဉ်းစားဆင်ခြင်ရန် နေရာ</span>
-        </p>
+        <div class="header-console">
+            <p>
+                <span lang="en">Tactical reflection interface</span>
+                <span lang="my">စဉ်းစားဆင်ခြင်မှု ထိန်းချုပ်မျက်နှာပြင်</span>
+            </p>
+            <p class="system-status">
+                <span class="system-dot" aria-hidden="true"></span>
+                <span lang="en">Local core online</span>
+                <span lang="my">စက်တွင်းစနစ် အသင့်ဖြစ်သည်</span>
+            </p>
+        </div>
     </header>
 
     <main id="main-content" class="main-content" tabindex="-1" @ref="mainContent">
         <p class="screen-reader-only" aria-live="polite" aria-atomic="true">@statusAnnouncement</p>
 
+        <div class="hud-workspace">
+            <div class="hud-primary">
+
         @if (CurrentProgressStep > 0)
         {
-            <nav class="progress" aria-label="Reading progress / ဟောစာတမ်း လုပ်ငန်းစဉ်">
+            <nav class="progress hud-progress" aria-label="Reading progress / ဟောစာတမ်း လုပ်ငန်းစဉ်">
                 <ol>
                     @foreach (var step in ProgressSteps)
                     {
@@ -44,7 +58,8 @@
 
         @if (isLoading)
         {
-            <section class="flow-panel loading-state" aria-labelledby="loading-title" aria-busy="true">
+            <section class="flow-panel hud-panel loading-state" aria-labelledby="loading-title" aria-busy="true">
+                <p class="panel-code" aria-hidden="true">BOOT_SEQUENCE // CATALOG_SYNC</p>
                 <p class="eyebrow">NatMyatSi · နတ်မျက်စိ</p>
                 <h1 id="loading-title">
                     <span lang="en">Preparing your questions</span>
@@ -58,7 +73,8 @@
         }
         else if (loadError is not null)
         {
-            <section class="flow-panel error-state" aria-labelledby="load-error-title" role="alert">
+            <section class="flow-panel hud-panel error-state" aria-labelledby="load-error-title" role="alert">
+                <p class="panel-code" aria-hidden="true">SYSTEM_ALERT // DATA_FAULT</p>
                 <p class="eyebrow">
                     <span lang="en">Unable to continue</span>
                     <span lang="my">ဆက်လက်လုပ်ဆောင်၍ မရပါ</span>
@@ -82,7 +98,8 @@
             @switch (stage)
             {
                 case WorkflowStage.Welcome:
-                    <section class="flow-panel welcome-panel" aria-labelledby="welcome-title">
+                    <section class="flow-panel hud-panel welcome-panel" aria-labelledby="welcome-title">
+                        <p class="panel-code" aria-hidden="true">ORACLE_CORE // STANDBY</p>
                         <p class="eyebrow">
                             <span lang="en">100 questions · 16 symbols</span>
                             <span lang="my">မေးခွန်း ၁၀၀ · သင်္ကေတ ၁၆ ခု</span>
@@ -142,6 +159,17 @@
                     break;
             }
         }
+            </div>
+
+            @if (!isLoading && loadError is null)
+            {
+                <SystemDiagnostics CurrentStep="@CurrentProgressStep"
+                                   Mode="@CurrentMode"
+                                   SelectedPosition="selectedPosition"
+                                   SoundEnabled="soundEnabled"
+                                   SoundToggle="ToggleSoundAsync" />
+            }
+        </div>
     </main>
 
     <footer class="site-footer">

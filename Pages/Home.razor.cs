@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using NatMyatSi.Models;
 using NatMyatSi.Services;
 
@@ -20,18 +21,24 @@ public partial class Home : IAsyncDisposable
     [Inject]
     private ILogger<Home> Logger { get; set; } = default!;
 
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = default!;
+
     private readonly List<DivinationSymbol> shuffledSymbols = [];
     private CancellationTokenSource? loadCancellation;
+    private InterfaceSoundInterop? soundInterop;
     private ElementReference mainContent;
     private NatMyatSiCatalog? catalog;
     private NatMyatSiQuestion? selectedQuestion;
     private DivinationSymbol? selectedSymbol;
     private NatMyatSiReading? selectedReading;
+    private int? selectedPosition;
     private WorkflowStage stage = WorkflowStage.Welcome;
     private string? loadError;
     private string statusAnnouncement = string.Empty;
     private bool isLoading = true;
     private bool focusMainAfterRender;
+    private bool soundEnabled;
 
     private int CurrentProgressStep => stage switch
     {
@@ -41,10 +48,24 @@ public partial class Home : IAsyncDisposable
         _ => 0
     };
 
+    private string CurrentMode => stage switch
+    {
+        WorkflowStage.Welcome => "STANDBY",
+        WorkflowStage.Question => "QUERY SELECT",
+        WorkflowStage.Selection => "TARGETING",
+        WorkflowStage.Result => "READING COMPLETE",
+        _ => "STANDBY"
+    };
+
     protected override Task OnInitializedAsync() => LoadCatalogAsync();
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if (firstRender)
+        {
+            soundInterop = new InterfaceSoundInterop(JsRuntime);
+        }
+
         if (!focusMainAfterRender)
         {
             return;
@@ -91,20 +112,26 @@ public partial class Home : IAsyncDisposable
         }
     }
 
-    private void StartReading() => MoveTo(
-        WorkflowStage.Question,
-        "Choose a question. / မေးခွန်းတစ်ခု ရွေးပါ။");
+    private async Task StartReading()
+    {
+        MoveTo(
+            WorkflowStage.Question,
+            "Choose a question. / မေးခွန်းတစ်ခု ရွေးပါ။");
+        await PlaySoundAsync("navigate");
+    }
 
-    private void SelectQuestion(NatMyatSiQuestion question)
+    private async Task SelectQuestion(NatMyatSiQuestion question)
     {
         selectedQuestion = question;
+        selectedPosition = null;
         PrepareShuffledSymbols();
         MoveTo(
             WorkflowStage.Selection,
             "The symbols are hidden. Choose one position. / သင်္ကေတများကို ဖုံးထားပါသည်။ နေရာတစ်ခု ရွေးပါ။");
+        await PlaySoundAsync("target");
     }
 
-    private void RevealReading(DivinationSymbol symbol)
+    private async Task RevealReading(DivinationSymbol symbol)
     {
         if (catalog is null || selectedQuestion is null)
         {
@@ -112,31 +139,63 @@ public partial class Home : IAsyncDisposable
         }
 
         selectedSymbol = symbol;
+        selectedPosition = shuffledSymbols.FindIndex(candidate => candidate.Id == symbol.Id) + 1;
         selectedReading = catalog.GetReading(selectedQuestion.Id, symbol.Id);
         MoveTo(
             WorkflowStage.Result,
             $"Your symbol is {symbol.Name}. The reading is ready. / သင်၏သင်္ကေတမှာ {symbol.MyanmarName} ဖြစ်သည်။ ဟောစာတမ်း အဆင်သင့်ဖြစ်ပါပြီ။");
+        await PlaySoundAsync("complete");
     }
 
-    private void ChooseAnotherQuestion()
+    private async Task ChooseAnotherQuestion()
     {
         selectedQuestion = null;
         selectedSymbol = null;
         selectedReading = null;
+        selectedPosition = null;
         shuffledSymbols.Clear();
         MoveTo(
             WorkflowStage.Question,
             "Choose a new question. / မေးခွန်းအသစ်တစ်ခု ရွေးပါ။");
+        await PlaySoundAsync("navigate");
     }
 
-    private void TrySameQuestion()
+    private async Task TrySameQuestion()
     {
         selectedSymbol = null;
         selectedReading = null;
+        selectedPosition = null;
         PrepareShuffledSymbols();
         MoveTo(
             WorkflowStage.Selection,
             "The hidden symbols were shuffled again. Choose one position. / ဖုံးထားသော သင်္ကေတများကို ထပ်မံရောမွှေထားပါသည်။ နေရာတစ်ခု ရွေးပါ။");
+        await PlaySoundAsync("target");
+    }
+
+    private async Task ToggleSoundAsync()
+    {
+        soundEnabled = !soundEnabled;
+        await PlaySoundAsync(soundEnabled ? "activate" : "deactivate", force: true);
+    }
+
+    private async Task PlaySoundAsync(string cue, bool force = false)
+    {
+        if (!soundEnabled && !force)
+        {
+            return;
+        }
+
+        try
+        {
+            if (soundInterop is not null)
+            {
+                await soundInterop.PlayAsync(cue);
+            }
+        }
+        catch (JSException exception)
+        {
+            Logger.LogWarning(exception, "The optional interface sound cue could not be played.");
+        }
     }
 
     private void PrepareShuffledSymbols()
@@ -155,13 +214,16 @@ public partial class Home : IAsyncDisposable
 
     public async ValueTask DisposeAsync()
     {
-        if (loadCancellation is null)
+        if (loadCancellation is not null)
         {
-            return;
+            await loadCancellation.CancelAsync();
+            loadCancellation.Dispose();
         }
 
-        await loadCancellation.CancelAsync();
-        loadCancellation.Dispose();
+        if (soundInterop is not null)
+        {
+            await soundInterop.DisposeAsync();
+        }
     }
 
     private sealed record ProgressStep(int Number, string English, string Myanmar);
