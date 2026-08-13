@@ -480,3 +480,8 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Local Vercel and deployment build output
+.vercel/
+.dotnet/
+dist/

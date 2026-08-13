@@ -1,0 +1,13 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "bash scripts/install-dotnet.sh",
+  "buildCommand": "./.dotnet/dotnet publish NatMyatSi.csproj --configuration Release --output dist",
+  "outputDirectory": "dist/wwwroot",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
