@@ -1,3 +1,25 @@
 ﻿@inherits LayoutComponentBase
 
-@Body
+<ErrorBoundary>
+    <ChildContent>
+        @Body
+    </ChildContent>
+    <ErrorContent>
+        <main class="main-content not-found" id="main-content">
+            <section class="flow-panel error-state" role="alert">
+                <h1>
+                    <span lang="en">Something went wrong</span>
+                    <span lang="my">အဆင်မပြေမှုတစ်ခု ဖြစ်ပေါ်ခဲ့သည်</span>
+                </h1>
+                <p>
+                    <span lang="en">Reload the app to start again.</span>
+                    <span lang="my">ပြန်လည်စတင်ရန် အက်ပ်ကို ပြန်ဖွင့်ပါ။</span>
+                </p>
+                <a class="primary-action" href="/">
+                    <span lang="en">Reload app</span>
+                    <span lang="my">အက်ပ်ကို ပြန်ဖွင့်မည်</span>
+                </a>
+            </section>
+        </main>
+    </ErrorContent>
+</ErrorBoundary>

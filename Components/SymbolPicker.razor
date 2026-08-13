@@ -1,0 +1,61 @@
+<section class="flow-panel" aria-labelledby="symbol-picker-title">
+    <p class="eyebrow">
+        <span lang="en">Step 3 of 4</span>
+        <span aria-hidden="true"> · </span>
+        <span lang="my">အဆင့် ၃ / ၄</span>
+    </p>
+
+    <h1 id="symbol-picker-title">
+        <span lang="en">Choose one position</span>
+        <span lang="my">နေရာတစ်ခု ရွေးပါ</span>
+    </h1>
+
+    <div class="selected-question">
+        <p class="label-text">
+            <span lang="en">Your question</span>
+            <span lang="my">သင်၏မေးခွန်း</span>
+        </p>
+        <p lang="my">@Question.Text</p>
+    </div>
+
+    <p class="lede">
+        <span lang="en">Follow your first instinct. Every covered position is a button you can reach with the Tab key.</span>
+        <span lang="my">ပထမဆုံးဖြစ်ပေါ်လာသော စိတ်ခံစားချက်အတိုင်း ရွေးပါ။ ဖုံးထားသော နေရာတိုင်းကို Tab ခလုတ်ဖြင့် ရောက်နိုင်ပါသည်။</span>
+    </p>
+
+    <div class="symbol-grid symbol-grid--covered" role="group" aria-label="Covered symbol choices / ဖုံးထားသော သင်္ကေတရွေးချယ်စရာများ">
+        @foreach (var item in Symbols.Select((symbol, index) => (symbol, index)))
+        {
+            var position = item.index + 1;
+            <button type="button"
+                    class="covered-symbol"
+                    aria-label="Choose position @position / နေရာ @position ကို ရွေးမည်"
+                    @key="item.symbol.Id"
+                    @onclick="() => SymbolSelected.InvokeAsync(item.symbol)">
+                <span aria-hidden="true">?</span>
+                <span class="position-number" aria-hidden="true">@position</span>
+            </button>
+        }
+    </div>
+
+    <div class="actions">
+        <button type="button" class="secondary-action" @onclick="OnShowSymbolsAgain">
+            <span lang="en">Show symbols again</span>
+            <span lang="my">သင်္ကေတများ ပြန်ကြည့်မည်</span>
+        </button>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public NatMyatSiQuestion Question { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<DivinationSymbol> Symbols { get; set; } = [];
+
+    [Parameter]
+    public EventCallback<DivinationSymbol> SymbolSelected { get; set; }
+
+    [Parameter]
+    public EventCallback OnShowSymbolsAgain { get; set; }
+}

@@ -1,0 +1,68 @@
+<section class="flow-panel result-panel" aria-labelledby="reading-result-title">
+    <p class="eyebrow">
+        <span lang="en">Step 4 of 4</span>
+        <span aria-hidden="true"> · </span>
+        <span lang="my">အဆင့် ၄ / ၄</span>
+    </p>
+
+    <h1 id="reading-result-title">
+        <span lang="en">Your reading</span>
+        <span lang="my">သင်၏ဟောစာတမ်း</span>
+    </h1>
+
+    <div class="revealed-symbol" aria-label="@Symbol.Name / @Symbol.MyanmarName">
+        <span class="symbol-glyph" aria-hidden="true">@Symbol.Symbol</span>
+        <span class="symbol-name" lang="en">@Symbol.Name</span>
+        <span class="symbol-name" lang="my">@Symbol.MyanmarName</span>
+    </div>
+
+    <dl class="reading-details">
+        <div>
+            <dt>
+                <span lang="en">Question</span>
+                <span lang="my">မေးခွန်း</span>
+            </dt>
+            <dd lang="my">@Question.Text</dd>
+        </div>
+        <div>
+            <dt>
+                <span lang="en">Reading</span>
+                <span lang="my">ဟောစာတမ်း</span>
+            </dt>
+            <dd lang="my">@Reading.Text</dd>
+        </div>
+    </dl>
+
+    <aside class="reflection-note" aria-label="Important note / အရေးကြီးမှတ်ချက်">
+        <p lang="en">Use this reading as a prompt for reflection, not as professional advice or a guaranteed prediction.</p>
+        <p lang="my">ဤဟောစာတမ်းကို စဉ်းစားဆင်ခြင်ရန် လမ်းညွှန်ချက်အဖြစ်သာ အသုံးပြုပါ။ ကျွမ်းကျင်ပညာရှင်၏ အကြံဉာဏ် သို့မဟုတ် အတည်ပြုခန့်မှန်းချက်အဖြစ် မယူဆပါနှင့်။</p>
+    </aside>
+
+    <div class="actions">
+        <button type="button" class="primary-action" @onclick="OnAskAnotherQuestion">
+            <span lang="en">Choose a new question</span>
+            <span lang="my">မေးခွန်းအသစ် ရွေးမည်</span>
+        </button>
+        <button type="button" class="secondary-action" @onclick="OnTrySameQuestion">
+            <span lang="en">Try the same question again</span>
+            <span lang="my">ဤမေးခွန်းကို ထပ်မေးမည်</span>
+        </button>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public NatMyatSiQuestion Question { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public DivinationSymbol Symbol { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public NatMyatSiReading Reading { get; set; } = default!;
+
+    [Parameter]
+    public EventCallback OnAskAnotherQuestion { get; set; }
+
+    [Parameter]
+    public EventCallback OnTrySameQuestion { get; set; }
+}

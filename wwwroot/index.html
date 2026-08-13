@@ -4,28 +4,29 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NatMyatSi</title>
+    <title>NatMyatSi — နတ်မျက်စိ</title>
+    <meta name="description" content="A private, bilingual NatMyatSi reflection experience with local static data. မေးခွန်းရွေး၍ စဉ်းစားဆင်ခြင်နိုင်သော နတ်မျက်စိ အက်ပ်။" />
+    <meta name="theme-color" content="#f7f5f0" />
     <base href="/" />
     <link rel="preload" id="webassembly" />
     <link rel="stylesheet" href="css/app.css" />
-    <!-- If you add any scoped CSS files, uncomment the following to load them
-    <link href="NatMyatSi.styles.css" rel="stylesheet" /> -->
     <script type="importmap"></script>
 </head>
 
 <body>
     <div id="app">
-        <svg class="loading-progress">
+        <svg class="loading-progress" aria-hidden="true">
             <circle r="40%" cx="50%" cy="50%" />
             <circle r="40%" cx="50%" cy="50%" />
         </svg>
-        <div class="loading-progress-text"></div>
+        <div class="loading-progress-text" role="status" aria-live="polite"></div>
     </div>
 
-    <div id="blazor-error-ui">
-        An unhandled error has occurred.
-        <a href="." class="reload">Reload</a>
-        <span class="dismiss">🗙</span>
+    <div id="blazor-error-ui" role="alert">
+        <span lang="en">The app encountered an error.</span>
+        <span lang="my">အက်ပ်တွင် အမှားတစ်ခု ဖြစ်ပေါ်ခဲ့သည်။</span>
+        <a href="." class="reload">Reload / ပြန်ဖွင့်မည်</a>
+        <button type="button" class="dismiss" aria-label="Dismiss error / အမှားစာကို ပိတ်မည်">×</button>
     </div>
     <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
 </body>

@@ -1,0 +1,62 @@
+<section class="flow-panel" aria-labelledby="symbol-preview-title">
+    <p class="eyebrow">
+        <span lang="en">Step 2 of 4</span>
+        <span aria-hidden="true"> · </span>
+        <span lang="my">အဆင့် ၂ / ၄</span>
+    </p>
+
+    <h1 id="symbol-preview-title">
+        <span lang="en">Remember the symbols</span>
+        <span lang="my">သင်္ကေတများကို မှတ်သားပါ</span>
+    </h1>
+
+    <div class="selected-question">
+        <p class="label-text">
+            <span lang="en">Your question</span>
+            <span lang="my">သင်၏မေးခွန်း</span>
+        </p>
+        <p lang="my">@Question.Text</p>
+    </div>
+
+    <p class="lede">
+        <span lang="en">Take as much time as you need. When you are ready, cover the grid and choose one position.</span>
+        <span lang="my">လိုအပ်သလောက် အချိန်ယူ၍ မှတ်သားပါ။ အဆင်သင့်ဖြစ်လျှင် ဇယားကိုဖုံးပြီး နေရာတစ်ခု ရွေးပါ။</span>
+    </p>
+
+    <ol class="symbol-grid symbol-grid--preview" aria-label="Symbol grid / သင်္ကေတဇယား">
+        @foreach (var item in Symbols.Select((symbol, index) => (symbol, index)))
+        {
+            <li class="symbol-card" @key="item.symbol.Id">
+                <span class="symbol-glyph" aria-hidden="true">@item.symbol.Symbol</span>
+                <span class="symbol-name" lang="en">@item.symbol.Name</span>
+                <span class="symbol-name" lang="my">@item.symbol.MyanmarName</span>
+                <span class="screen-reader-only">Position @(item.index + 1)</span>
+            </li>
+        }
+    </ol>
+
+    <div class="actions">
+        <button type="button" class="primary-action" @onclick="OnCover">
+            <span lang="en">Cover and choose</span>
+            <span lang="my">ဖုံးပြီး ရွေးမည်</span>
+        </button>
+        <button type="button" class="secondary-action" @onclick="OnChooseAnotherQuestion">
+            <span lang="en">Change question</span>
+            <span lang="my">မေးခွန်းပြောင်းမည်</span>
+        </button>
+    </div>
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public NatMyatSiQuestion Question { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<DivinationSymbol> Symbols { get; set; } = [];
+
+    [Parameter]
+    public EventCallback OnCover { get; set; }
+
+    [Parameter]
+    public EventCallback OnChooseAnotherQuestion { get; set; }
+}
