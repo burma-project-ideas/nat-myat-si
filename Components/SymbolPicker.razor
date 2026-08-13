@@ -1,8 +1,8 @@
 <section class="flow-panel" aria-labelledby="symbol-picker-title">
     <p class="eyebrow">
-        <span lang="en">Step 3 of 4</span>
+        <span lang="en">Step 2 of 3</span>
         <span aria-hidden="true"> · </span>
-        <span lang="my">အဆင့် ၃ / ၄</span>
+        <span lang="my">အဆင့် ၂ / ၃</span>
     </p>
 
     <h1 id="symbol-picker-title">
@@ -38,12 +38,6 @@
         }
     </div>
 
-    <div class="actions">
-        <button type="button" class="secondary-action" @onclick="OnShowSymbolsAgain">
-            <span lang="en">Show symbols again</span>
-            <span lang="my">သင်္ကေတများ ပြန်ကြည့်မည်</span>
-        </button>
-    </div>
 </section>
 
 @code {
@@ -56,6 +50,4 @@
     [Parameter]
     public EventCallback<DivinationSymbol> SymbolSelected { get; set; }
 
-    [Parameter]
-    public EventCallback OnShowSymbolsAgain { get; set; }
 }

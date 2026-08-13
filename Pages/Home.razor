@@ -92,8 +92,8 @@
                             <span lang="my">ခဏနားပါ။ မေးပါ။ ရွေးပါ။</span>
                         </h1>
                         <p class="lede">
-                            <span lang="en">Choose a question, remember the shuffled symbols, then reveal one reading from the position that draws you.</span>
-                            <span lang="my">မေးခွန်းတစ်ခုရွေးပါ၊ ရောမွှေထားသော သင်္ကေတများကို မှတ်သားပါ၊ ထို့နောက် စိတ်ဝင်စားမိသော နေရာမှ ဟောစာတမ်းတစ်ခုကို ဖော်ထုတ်ပါ။</span>
+                            <span lang="en">Choose a question, then reveal one reading from a covered position that draws you.</span>
+                            <span lang="my">မေးခွန်းတစ်ခုရွေးပါ၊ ထို့နောက် စိတ်ဝင်စားမိသော ဖုံးထားသည့်နေရာမှ ဟောစာတမ်းတစ်ခုကို ဖော်ထုတ်ပါ။</span>
                         </p>
 
                         <ol class="flow-summary">
@@ -103,14 +103,10 @@
                             </li>
                             <li>
                                 <span class="summary-number" aria-hidden="true">2</span>
-                                <span><span lang="en">Remember the symbols</span><span lang="my">သင်္ကေတများ မှတ်သားပါ</span></span>
-                            </li>
-                            <li>
-                                <span class="summary-number" aria-hidden="true">3</span>
                                 <span><span lang="en">Choose a covered position</span><span lang="my">ဖုံးထားသော နေရာကို ရွေးပါ</span></span>
                             </li>
                             <li>
-                                <span class="summary-number" aria-hidden="true">4</span>
+                                <span class="summary-number" aria-hidden="true">3</span>
                                 <span><span lang="en">Read and reflect</span><span lang="my">ဖတ်ရှုပြီး စဉ်းစားပါ</span></span>
                             </li>
                         </ol>
@@ -131,18 +127,10 @@
                     <QuestionPicker Questions="catalog!.Questions" QuestionSelected="SelectQuestion" />
                     break;
 
-                case WorkflowStage.Preview:
-                    <SymbolPreview Question="selectedQuestion!"
-                                   Symbols="shuffledSymbols"
-                                   OnCover="CoverSymbols"
-                                   OnChooseAnotherQuestion="ChooseAnotherQuestion" />
-                    break;
-
                 case WorkflowStage.Selection:
                     <SymbolPicker Question="selectedQuestion!"
                                   Symbols="shuffledSymbols"
-                                  SymbolSelected="RevealReading"
-                                  OnShowSymbolsAgain="ShowSymbolsAgain" />
+                                  SymbolSelected="RevealReading" />
                     break;
 
                 case WorkflowStage.Result:

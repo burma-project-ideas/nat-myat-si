@@ -7,10 +7,9 @@ The app has no ASP.NET Core host, API endpoint, account, database, or submitted 
 ## Reading flow
 
 1. Choose or search for one of the 100 questions.
-2. Review a newly shuffled 4 × 4 grid of 16 symbols for as long as needed.
-3. Cover the grid and choose one position.
-4. Read the answer matched by the selected question and revealed symbol.
-5. Choose a new question or reshuffle the same question.
+2. Choose one position from a shuffled 4 × 4 covered grid.
+3. Read the answer matched by the selected question and hidden symbol.
+4. Choose a new question or reshuffle the same question.
 
 ## Run locally
 

@@ -10,9 +10,8 @@ public partial class Home : IAsyncDisposable
     private static readonly ProgressStep[] ProgressSteps =
     [
         new(1, "Question", "မေးခွန်း"),
-        new(2, "Remember", "မှတ်သား"),
-        new(3, "Choose", "ရွေးချယ်"),
-        new(4, "Reading", "ဟောစာတမ်း")
+        new(2, "Choose", "ရွေးချယ်"),
+        new(3, "Reading", "ဟောစာတမ်း")
     ];
 
     [Inject]
@@ -37,9 +36,8 @@ public partial class Home : IAsyncDisposable
     private int CurrentProgressStep => stage switch
     {
         WorkflowStage.Question => 1,
-        WorkflowStage.Preview => 2,
-        WorkflowStage.Selection => 3,
-        WorkflowStage.Result => 4,
+        WorkflowStage.Selection => 2,
+        WorkflowStage.Result => 3,
         _ => 0
     };
 
@@ -102,17 +100,9 @@ public partial class Home : IAsyncDisposable
         selectedQuestion = question;
         PrepareShuffledSymbols();
         MoveTo(
-            WorkflowStage.Preview,
-            "The symbols are ready to remember. / သင်္ကေတများကို မှတ်သားရန် အဆင်သင့်ဖြစ်ပါပြီ။");
+            WorkflowStage.Selection,
+            "The symbols are hidden. Choose one position. / သင်္ကေတများကို ဖုံးထားပါသည်။ နေရာတစ်ခု ရွေးပါ။");
     }
-
-    private void CoverSymbols() => MoveTo(
-        WorkflowStage.Selection,
-        "The symbols are covered. Choose one position. / သင်္ကေတများကို ဖုံးထားပါပြီ။ နေရာတစ်ခု ရွေးပါ။");
-
-    private void ShowSymbolsAgain() => MoveTo(
-        WorkflowStage.Preview,
-        "The symbols are visible again. / သင်္ကေတများကို ပြန်လည်ပြသထားပါသည်။");
 
     private void RevealReading(DivinationSymbol symbol)
     {
@@ -145,8 +135,8 @@ public partial class Home : IAsyncDisposable
         selectedReading = null;
         PrepareShuffledSymbols();
         MoveTo(
-            WorkflowStage.Preview,
-            "The symbols were shuffled again. / သင်္ကေတများကို ထပ်မံရောမွှေထားပါသည်။");
+            WorkflowStage.Selection,
+            "The hidden symbols were shuffled again. Choose one position. / ဖုံးထားသော သင်္ကေတများကို ထပ်မံရောမွှေထားပါသည်။ နေရာတစ်ခု ရွေးပါ။");
     }
 
     private void PrepareShuffledSymbols()
@@ -180,7 +170,6 @@ public partial class Home : IAsyncDisposable
     {
         Welcome,
         Question,
-        Preview,
         Selection,
         Result
     }

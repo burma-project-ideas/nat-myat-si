@@ -326,7 +326,7 @@ h1 [lang="my"] {
 
 .progress ol {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     margin: 0;
     padding: 0;
     list-style: none;
@@ -486,26 +486,12 @@ dt {
     padding: 0;
 }
 
-.symbol-grid--preview {
-    list-style: none;
-}
-
-.symbol-card,
 .covered-symbol {
     min-width: 0;
     min-height: clamp(4.5rem, 13vw, 7.25rem);
     border: 1px solid var(--border);
     border-radius: 0.5rem;
     background: var(--surface-muted);
-}
-
-.symbol-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0.4rem;
-    text-align: center;
 }
 
 .symbol-glyph {
@@ -728,7 +714,6 @@ dt {
         padding-inline: 1rem;
     }
 
-    .symbol-card,
     .covered-symbol {
         min-height: 4rem;
     }
