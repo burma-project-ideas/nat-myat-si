@@ -4,36 +4,39 @@
         <span lang="my">မေးခွန်းတစ်ခု ရွေးပါ</span>
     </h1>
 
-    <p class="lede">
-        <span lang="en">Choose what you want to reflect on.</span>
-        <span lang="my">စဉ်းစားဆင်ခြင်လိုသော အကြောင်းအရာကို ရွေးပါ။</span>
-    </p>
-
     <div class="search-field">
         <label for="question-search">
-            <span lang="en">Search questions</span>
-            <span lang="my">မေးခွန်းများ ရှာရန်</span>
+            <span lang="en">Find a question</span>
+            <span lang="my">မေးခွန်း ရှာရန်</span>
         </label>
         <input id="question-search"
                type="search"
                inputmode="search"
                autocomplete="off"
-               placeholder="Search by number or Myanmar text / နံပါတ် သို့မဟုတ် မြန်မာစာဖြင့်ရှာရန်"
+               placeholder="Type a number or word / နံပါတ် သို့မဟုတ် စာလုံး"
                aria-describedby="question-count"
                @bind="SearchText"
                @bind:event="oninput" />
     </div>
 
     <p id="question-count" class="result-count" aria-live="polite">
-        <span lang="en">Showing @FilteredQuestions.Count of @Questions.Count questions</span>
-        <span lang="my">မေးခွန်း @FilteredQuestions.Count / @Questions.Count ခု ပြထားသည်</span>
+        @if (FilteredQuestions.Count == Questions.Count)
+        {
+            <span lang="en">@Questions.Count available</span>
+            <span lang="my">မေးခွန်း @Questions.Count ခု</span>
+        }
+        else
+        {
+            <span lang="en">@FilteredQuestions.Count found</span>
+            <span lang="my">မေးခွန်း @FilteredQuestions.Count / @Questions.Count ခု</span>
+        }
     </p>
 
     @if (FilteredQuestions.Count == 0)
     {
         <div class="empty-state" role="status">
-            <p lang="en">No matching questions. Try a different number or word.</p>
-            <p lang="my">ကိုက်ညီသော မေးခွန်းမရှိပါ။ အခြားနံပါတ် သို့မဟုတ် စာလုံးဖြင့် ရှာပါ။</p>
+            <p lang="en">No question found. Try a different number or word.</p>
+            <p lang="my">မေးခွန်း မတွေ့ပါ။ အခြားနံပါတ် သို့မဟုတ် စာလုံးဖြင့် ရှာပါ။</p>
         </div>
     }
     else
