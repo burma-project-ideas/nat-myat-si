@@ -62,7 +62,7 @@ public partial class Home : IAsyncDisposable
         }
 
         focusMainAfterRender = false;
-        await mainContent.FocusAsync();
+        await mainContent.FocusAsync(preventScroll: true);
     }
 
     private async Task LoadCatalogAsync()
