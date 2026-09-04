@@ -464,12 +464,12 @@ dt {
 
 .question-panel {
     display: grid;
-    grid-template-columns: minmax(15rem, 0.38fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
-        "title list"
-        "search list"
-        "count list";
-    column-gap: clamp(1.5rem, 4vw, 4rem);
+        "title"
+        "search"
+        "count"
+        "list";
     row-gap: 0.7rem;
     align-items: start;
 }
@@ -477,18 +477,28 @@ dt {
 .question-panel h1 {
     grid-area: title;
     max-width: 11ch;
+    margin-inline: auto;
     font-size: clamp(2rem, 3.4vw, 3.5rem);
+    text-align: center;
 }
 
 .question-panel .search-field {
     grid-area: search;
-    width: 100%;
+    width: min(100%, 44rem);
     margin: 0;
+    justify-self: center;
+    text-align: center;
+}
+
+.question-panel .search-field label {
+    align-items: center;
 }
 
 .question-panel .result-count {
     grid-area: count;
     margin: 0;
+    justify-self: center;
+    text-align: center;
 }
 
 .question-panel .question-list,
