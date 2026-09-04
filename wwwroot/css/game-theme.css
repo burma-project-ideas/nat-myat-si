@@ -630,7 +630,7 @@ dt {
     display: grid;
     grid-template-columns: minmax(9rem, 0.65fr) minmax(0, 1.35fr);
     grid-template-rows: auto minmax(0, 1fr) auto auto;
-    gap: 0.75rem 1.4rem;
+    gap: 0.95rem 1.4rem;
     overflow: hidden;
     text-align: left;
 }
@@ -639,13 +639,19 @@ dt {
     grid-column: 1 / -1;
     margin-inline: auto;
     font-size: 2.05rem;
+    line-height: 1.15;
     text-align: center;
+}
+
+.result-panel h1 [lang="my"] {
+    margin-top: 0.25rem;
+    line-height: 1.35;
 }
 
 .result-panel .revealed-symbol {
     grid-column: 1;
     grid-row: 2;
-    align-self: center;
+    align-self: start;
     justify-self: center;
     min-width: 6.5rem;
     min-height: min(100%, 8.5rem);
@@ -656,29 +662,31 @@ dt {
 .result-panel .reading-details {
     grid-column: 2;
     grid-row: 2;
-    align-self: center;
+    align-self: start;
     margin: 0;
     text-align: center;
+    overflow: hidden;
 }
 
 .result-panel .reading-details > div {
-    padding-block: 0.4rem;
+    padding: 0.55rem 0.8rem;
 }
 
 .result-panel .reading-details dd {
     margin-top: 0.2rem;
-    font-size: 0.98rem;
+    font-size: 0.92rem;
+    line-height: 1.55;
 }
 
 .result-panel .reflection-note {
     grid-column: 1 / -1;
     grid-row: 3;
     margin: 0;
-    padding-block: 0.65rem;
+    padding: 0.65rem 0.85rem;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
-    font-size: 0.86rem;
+    font-size: 0.82rem;
     line-height: 1.45;
 }
 
@@ -698,6 +706,8 @@ dt {
 
 .result-panel .actions button {
     flex: 1 1 12rem;
+    align-items: center;
+    text-align: center;
 }
 
 .sound-toggle {
