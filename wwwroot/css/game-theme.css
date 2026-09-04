@@ -227,6 +227,19 @@ body {
     grid-row: 1 / 3;
     align-self: end;
     margin: 0;
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+}
+
+.welcome-panel .reflection-note p[lang="en"] {
+    text-align: left;
+}
+
+.welcome-panel .reflection-note p[lang="my"] {
+    padding-left: 0;
+    padding-top: 0.45rem;
+    border-left: 0;
+    border-top: 1px dashed var(--border);
 }
 
 h1 {
@@ -335,6 +348,27 @@ dt {
     border-radius: 0.45rem;
     background: var(--surface-muted);
     color: var(--muted);
+    text-align: left;
+}
+
+.reflection-note {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.reflection-note p {
+    margin: 0;
+}
+
+.reflection-note p[lang="en"] {
+    text-align: right;
+}
+
+.reflection-note p[lang="my"] {
+    padding-left: 1rem;
+    border-left: 1px dashed var(--border);
     text-align: left;
 }
 
@@ -683,15 +717,8 @@ dt {
     grid-row: 3;
     margin: 0;
     padding: 0.65rem 0.85rem;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
     font-size: 0.82rem;
     line-height: 1.45;
-}
-
-.result-panel .reflection-note p + p {
-    margin-top: 0;
 }
 
 .result-panel .reflection-note [lang="my"] {
@@ -706,8 +733,21 @@ dt {
 
 .result-panel .actions button {
     flex: 1 1 12rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: 0.8rem;
     align-items: center;
-    text-align: center;
+    text-align: left;
+}
+
+.result-panel .actions button span[lang="en"] {
+    text-align: right;
+}
+
+.result-panel .actions button span[lang="my"] {
+    padding-left: 0.8rem;
+    border-left: 1px solid currentColor;
+    text-align: left;
 }
 
 .sound-toggle {
@@ -782,13 +822,20 @@ dt {
 .site-footer p {
     max-width: none;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 1rem;
     align-items: center;
     justify-content: center;
     font-size: 0.72rem;
-    text-align: center;
     color: #f5d88e;
+}
+
+.site-footer p span[lang="en"] {
+    text-align: right;
+}
+
+.site-footer p span[lang="my"] {
+    text-align: left;
 }
 
 #blazor-error-ui {
@@ -897,6 +944,22 @@ dt {
         line-height: 1.4;
     }
 
+    .reflection-note {
+        grid-template-columns: 1fr;
+        gap: 0.45rem;
+    }
+
+    .reflection-note p[lang="en"] {
+        text-align: left;
+    }
+
+    .reflection-note p[lang="my"] {
+        padding-left: 0;
+        padding-top: 0.45rem;
+        border-left: 0;
+        border-top: 1px dashed var(--border);
+    }
+
     .welcome-panel .lede [lang="my"],
     .welcome-panel .reflection-note [lang="my"] {
         line-height: 1.5;
@@ -954,6 +1017,16 @@ dt {
         min-height: 2.75rem;
         padding: 0.4rem 0.5rem;
         font-size: 0.68rem;
+        grid-template-columns: 1fr;
+        row-gap: 0.12rem;
+        text-align: center;
+    }
+
+    .result-panel .actions button span[lang="en"],
+    .result-panel .actions button span[lang="my"] {
+        padding-left: 0;
+        border-left: 0;
+        text-align: center;
     }
 
     .site-footer p {
