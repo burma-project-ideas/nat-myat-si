@@ -54,7 +54,7 @@ Import the repository into Vercel with the project root unchanged. No framework 
 
 ## Accessibility and design
 
-The interface uses native controls, concise bilingual English and Myanmar copy, visible keyboard focus, 44-pixel minimum targets, responsive reflow, and reduced-motion support. Its high-contrast tactical theme keeps the covered-position grid, subtle status motion, and optional synthesized interface sounds that are off by default. The font stack uses San Francisco on Apple platforms and Segoe UI on Windows, with system fallbacks for Myanmar glyphs.
+The interface uses native controls, concise bilingual English and Myanmar copy, visible keyboard focus, 44-pixel minimum targets, responsive reflow, and reduced-motion support. Its clean card-based interface keeps the covered-position grid and optional synthesized interface sounds that are off by default. The font stack uses San Francisco on Apple platforms and Segoe UI on Windows, with system fallbacks for Myanmar glyphs.
 
 ## စစ်ဆေးမယ်
 
@@ -68,3 +68,11 @@ App implementation: [Sann Lynn Htun](https://github.com/sannlynnhtun-coding)။ 
 ## ကိုယ်တိုင် ပြန်ရေးကြည့်ချင်ရင်
 
 အပေါ်က App Workflow ကို အဆင့်လိုက် လေ့လာပြီး UI၊ Data နဲ့ State ကို ခွဲရေးကြည့်နိုင်ပါတယ်။ Bug Report၊ Documentation နဲ့ Implementation အသစ်တွေကို Issue / Pull Request နဲ့ ပံ့ပိုးနိုင်ပါတယ်။ မူရင်းပံ့ပိုးသူနဲ့ Data Credit ကို ဆက်လက်ထိန်းသိမ်းပါ။
+
+## UI Design Update
+
+လက်ရှိ Interface က [Untitled UI](https://www.untitledui.com/react/components) ရဲ့ Form၊ Card၊ Table၊ Badge နဲ့ Page Header Visual Patterns ကို **Blazor နဲ့ ပြန်လည်ဖန်တီးထားတာ** ပါ။ React Component Package ကို သုံးထားတာ မဟုတ်ပါဘူး။ White/Gray Surfaces၊ Restrained Purple Accent၊ Visible Focus နဲ့ Responsive Layout ကို အသုံးပြုထားပါတယ်။ မူရင်း App Data၊ Calculation နဲ့ Browser Storage Keys တွေကို ဆက်လက်ထိန်းသိမ်းထားပါတယ်။ Myanmar စာအတွက် Self-hosted Padauk Font ကို သုံးပြီး Font Notice ကို `wwwroot/fonts/OFL-Padauk.txt` မှာ ထိန်းသိမ်းထားပါတယ်။
+
+![Redesigned desktop interface](screenshots/redesign-desktop.jpg)
+
+[Mobile preview](screenshots/redesign-mobile.jpg)
