@@ -1,17 +1,36 @@
-# NatMyatSi
+# Nat Myat Si (နတ်မျက်စိ)
+
+[Burma Project Ideas](https://github.com/burma-project-ideas) အောက်မှာ နောက်လာမယ့်သူတွေ App Flow နဲ့ Data ကို လေ့လာပြီး ကိုယ်နှစ်သက်တဲ့ Programming Language နဲ့ ပြန်ရေးကြည့်နိုင်ဖို့ ထားပေးထားတဲ့ Project ပါ။ Organization ဆီ ပြောင်းရွှေ့ထားခြင်းက မူရင်း Creator နဲ့ Data Source Credit ကို အစားထိုးခြင်း မဟုတ်ပါဘူး။
+
+[App ကို ဒီမှာ ဖွင့်နိုင်ပါတယ်](https://nat-myat-si.vercel.app/)။ Repository အမည်ပြောင်းပေမယ့် Live Domain ကို မပြောင်းထားပါဘူး။
 
 NatMyatSi is a bilingual, client-only .NET 10 Blazor WebAssembly app. It runs entirely in the browser and is designed for static hosting on Vercel.
 
 The app has no ASP.NET Core host, API endpoint, account, database, or submitted question. Its 100 questions, 16 symbols, and 1,600 readings are compiled directly into the WebAssembly application as C# static data.
 
-## Reading flow
+## အသုံးပြုပုံ
 
-1. Choose or search for one of the 100 questions.
-2. Choose one position from a shuffled 4 × 4 covered grid.
-3. Read the answer matched by the selected question and hidden symbol.
-4. Choose a new question or reshuffle the same question.
+1. မေးခွန်း ၁၀၀ ထဲက တစ်ခုကို ရွေးပါ သို့မဟုတ် ရှာပါ။
+2. Shuffle လုပ်ထားတဲ့ 4 × 4 ကွက်ထဲက တစ်ကွက်ကို ရွေးပါ။
+3. မေးခွန်းနဲ့ ရလာတဲ့ Symbol အတွဲရဲ့ အဖြေကို ဖတ်ပါ။
+4. မေးခွန်းအသစ်ရွေးပါ သို့မဟုတ် လက်ရှိမေးခွန်းကို ပြန် Shuffle လုပ်ပါ။
 
-## Run locally
+## App ရဲ့ Workflow
+
+`Pages/Home.razor.cs` က ရွေးထားတဲ့ Question နဲ့ Symbol State ကို ထိန်းပါတယ်။ `NatMyatSiDataService` က `Data/NatMyatSiStaticData.cs` ထဲမှာ Compile လုပ်ထားတဲ့ Catalog ကို ဖတ်ပြီး မေးခွန်း ၁၀၀၊ Symbol ၁၆ ခုနဲ့ အဖြေ ၁,၆၀၀ ပြည့်စုံမှု၊ Unique Pair ဖြစ်မှုကို စစ်ပါတယ်။ Question ရွေးပြီး Covered Grid ထဲက Position ကို နှိပ်တဲ့အခါ သက်ဆိုင်ရာ Symbol နဲ့ Answer ကို ရှာကာ `ReadingResult` Component မှာ ပြပါတယ်။ Runtime JSON Request နဲ့ Backend API မလိုပါဘူး။
+
+## Project ဖွဲ့စည်းပုံ
+
+| Path | တာဝန် |
+| --- | --- |
+| `Pages/Home.razor`, `Home.razor.cs` | Reading Flow နဲ့ UI State |
+| `Components/` | Question Picker၊ Symbol Picker နဲ့ Result |
+| `Data/NatMyatSiStaticData.cs` | Compiled Questions၊ Symbols နဲ့ Answers |
+| `Models/` | Catalog Models နဲ့ Validation |
+| `Services/` | Catalog Access နဲ့ Optional Sound Interop |
+| `vercel.json`, `global.json` | Static Deployment နဲ့ Pinned SDK |
+
+## Local မှာ Run မယ်
 
 ```powershell
 dotnet run
@@ -27,7 +46,7 @@ The application builds its catalog from `Data/NatMyatSiStaticData.cs`. It does n
 - exactly 16 unique symbols;
 - one unique answer for every question-and-symbol pair.
 
-## Vercel deployment
+## Build နဲ့ Deployment
 
 `vercel.json` installs the pinned .NET 10 SDK, publishes the standalone WebAssembly project, serves `dist/wwwroot`, and provides a single-page-app route fallback.
 
@@ -36,3 +55,16 @@ Import the repository into Vercel with the project root unchanged. No framework 
 ## Accessibility and design
 
 The interface uses native controls, concise bilingual English and Myanmar copy, visible keyboard focus, 44-pixel minimum targets, responsive reflow, and reduced-motion support. Its high-contrast tactical theme keeps the covered-position grid, subtle status motion, and optional synthesized interface sounds that are off by default. The font stack uses San Francisco on Apple platforms and Segoe UI on Windows, with system fallbacks for Myanmar glyphs.
+
+## စစ်ဆေးမယ်
+
+`dotnet build -c Release` နဲ့ Build စစ်ပါ။ Question Search၊ Shuffle၊ Symbol Reveal၊ Question ပြောင်းခြင်းနဲ့ Keyboard Navigation ကို စမ်းပါ။ မေးခွန်းနဲ့ အဖြေတွေက ရိုးရာအကြောင်းအရာဖြစ်ပြီး အတည်ပြုထားတဲ့ ခန့်မှန်းချက်များ မဟုတ်ပါဘူး။
+
+
+## အဓိက ပံ့ပိုးသူများနှင့် မူရင်း Data
+
+App implementation: [Sann Lynn Htun](https://github.com/sannlynnhtun-coding)။ ရိုးရာမေးခွန်း/အဖြေ Data ရဲ့ မူရင်းစာအုပ်နဲ့ စာရေးသူကို Repository မှာ မသတ်မှတ်ထားသေးပါဘူး။ Padauk Font Notice ကို `wwwroot/fonts/OFL-Padauk.txt` မှာ ဖတ်နိုင်ပါတယ်။
+
+## ကိုယ်တိုင် ပြန်ရေးကြည့်ချင်ရင်
+
+အပေါ်က App Workflow ကို အဆင့်လိုက် လေ့လာပြီး UI၊ Data နဲ့ State ကို ခွဲရေးကြည့်နိုင်ပါတယ်။ Bug Report၊ Documentation နဲ့ Implementation အသစ်တွေကို Issue / Pull Request နဲ့ ပံ့ပိုးနိုင်ပါတယ်။ မူရင်းပံ့ပိုးသူနဲ့ Data Credit ကို ဆက်လက်ထိန်းသိမ်းပါ။
