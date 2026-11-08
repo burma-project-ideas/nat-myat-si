@@ -1,3 +1,5 @@
+![Project logo](wwwroot/branding/icon-192.png)
+
 # Nat Myat Si (နတ်မျက်စိ)
 
 [Burma Project Ideas](https://github.com/burma-project-ideas) အောက်မှာ နောက်လာမယ့်သူတွေ App Flow နဲ့ Data ကို လေ့လာပြီး ကိုယ်နှစ်သက်တဲ့ Programming Language နဲ့ ပြန်ရေးကြည့်နိုင်ဖို့ ထားပေးထားတဲ့ Project ပါ။ Organization ဆီ ပြောင်းရွှေ့ထားခြင်းက မူရင်း Creator နဲ့ Data Source Credit ကို အစားထိုးခြင်း မဟုတ်ပါဘူး။
@@ -80,3 +82,7 @@ After changing styles or utility classes, run `npm ci` and `npm run build:css` b
 ![Bencho-inspired desktop interface](screenshots/redesign-desktop.jpg)
 
 [Mobile preview](screenshots/redesign-mobile.jpg)
+
+## Brand assets
+
+The original monochrome mark matches the dark interface. Transparent SVG/PNG masters, a dark-on-light variant, favicon sizes (16/32/48), Apple touch icon (180), app icons (192/512), and a 1200×630 social image are generated from `wwwroot/branding/logo-master.svg`. Run `npm ci && npm run build:brand` to regenerate them. Existing font and data licenses remain unchanged.
